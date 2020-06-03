@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kingstar.ksfdatatransfer.mapper.two.UserBaseMapper" >
+
+    <select id="one" resultType="com.kingstar.ksfdatatransfer.entity.UserBase">
+        select a.BRANCH_NAME name from BS_USER.OU_BRANCH_INFO_A a where rownum=1
+    </select>
+
+</mapper>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kingstar.ksfdatatransfer.mapper.one.DictionaryEntityMapper" >
+
+
+    <select id="querySubitemSort" resultType="java.lang.Integer">
+select MAX(subitem_sort) from bs_dictionary.ts_dictionary_repo d where d.parent_ident='00e0760b55324b64aa00a65c38d38692' and d.data_status=1
+    </select>
+
+
+    <insert id="saveAll" parameterType="java.util.List">
+        INSERT INTO `bs_dictionary`.`ts_dictionary_repo`(`id`, `code`, `value`,  `depth`, `type`, `microservice`,
+            `tree_group`, `orderr`, `parent_ident`, `ident_id`,
+            `relationship`, `data_status`, `parent_code`, `subitem_sort`, `create_time`) VALUES
+        <foreach collection="list" item="item" separator="," >
+            (#{item.id}, #{item.code}, #{item.value},  #{item.depth}, #{item.type}, #{item.microservice}, #{item.treeGroup},
+            #{item.orderr},#{item.parentIdent}, #{item.identId}, #{item.relationship}, #{item.dataStatus}, #{item.parentCode}, #{item.subitemSort}, #{item.createTime})
+        </foreach>
+    </insert>
+
+
+    <select id="queryExistedCodes" parameterType="java.util.List" resultType="java.lang.String">
+        select d.code
+        from bs_dictionary.ts_dictionary_repo d
+        where d.parent_ident='00e0760b55324b64aa00a65c38d38692'
+        and d.data_status=1 and d.microservice='common' and d.depth=3
+    </select>
+
+
+    <update id="updateAll" parameterType="java.util.List">
+
+        update  bs_dictionary.ts_dictionary_repo
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="value =case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    <if test="item.branchCode!=null">
+                        when code=#{item.branchCode}
+                        then #{item.branchName}
+                    </if>
+
+                </foreach>
+                else ''
+            </trim>
+        </trim>
+        where parent_ident='00e0760b55324b64aa00a65c38d38692' and data_status=1 and
+        microservice='common' and depth=3 and code in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item.branchCode}
+        </foreach>
+    </update>
+
+
+</mapper>

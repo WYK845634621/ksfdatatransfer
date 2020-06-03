@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kingstar.ksfdatatransfer.mapper.two.OuCustInfoAMapper" >
+
+    <select id="all" resultType="com.kingstar.ksfdatatransfer.entity.OuCustInfoA" parameterType="com.kingstar.ksfdatatransfer.entity.OuCustInfoA">
+        select  a.CUST_NO custNo,
+                a.CUST_NAME custName,
+				a.CREATE_DATE createDate,
+				a.CREATE_TIME createTime
+        from BS_USER.OU_CUST_INFO_A a
+        where SYS_NO='04'
+        <if test="createDate != null and createTime != null">
+            and  CONCAT(a.CREATE_DATE, a.CREATE_TIME) > CONCAT(#{createDate},#{createTime})
+        </if>
+        ORDER BY a.CREATE_DATE ,a.CREATE_TIME
+    </select>
+
+    <select id="allAfterTime" resultType="com.kingstar.ksfdatatransfer.entity.OuCustInfoA" parameterType="com.kingstar.ksfdatatransfer.entity.OuCustInfoA">
+        select  a.CUST_NO custNo,
+                a.CUST_NAME custName,
+				a.CREATE_DATE createDate,
+				a.CREATE_TIME createTime
+        from BS_USER.OU_CUST_INFO_A a
+        where SYS_NO='04' and  CONCAT(a.CREATE_DATE, a.CREATE_TIME) > CONCAT(#{createDate},#{createTime})
+        ORDER BY a.CREATE_DATE DESC,a.CREATE_TIME DESC
+    </select>
+
+    <select id="selectPage" resultType="com.kingstar.ksfdatatransfer.entity.OuCustInfoA" >
+        select b.* from ( select  a.CUST_NO custNo,
+        a.CUST_NAME custName,
+        a.CREATE_DATE createDate,
+        a.CREATE_TIME createTime,
+        rownum rowno
+        from BS_USER.OU_CUST_INFO_A a
+        where SYS_NO='04'
+        <if test="createDate != null and createDate !='' and createTime != null and createTime != '' ">
+            and  CONCAT(a.CREATE_DATE, a.CREATE_TIME) >= CONCAT(#{createDate},#{createTime})
+        </if>
+        and rownum &lt;= #{end}  ORDER BY a.CREATE_DATE ,a.CREATE_TIME) b
+        where b.rowno &gt;= #{start}
+    </select>
+
+</mapper>

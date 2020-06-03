@@ -1,0 +1,44 @@
+server:
+  tomcat:
+    uri-encoding: UTF-8
+  port: 9090
+spring:
+  profiles:
+    active: dev
+  application:
+    name: ksfdatatransfer
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+  data:
+    elasticsearch:
+      cluster-name: kingstar-application
+      cluster-nodes: 10.243.141.150:9300
+
+# mybatis 配置
+#mybatis:
+#  type-aliases-package: com.kingstar.ksfdatatransfer.entity
+#  mapper-locations: classpath:/dataOneMapper/*.xml,classpath:/dataTwoMapper/*.xml
+mybatis-plus:
+  mapper-locations: classpath:/dataOneMapper/*.xml,classpath:/dataTwoMapper/*.xml
+  typeAliasesPackage: com.kingstar.ksfdatatransfer.entity
+  global-config:
+    db-config:
+      id-type: AUTO
+      field-strategy: NOT_NULL
+      logic-delete-value: -1
+      logic-not-delete-value: 0
+    banner: false
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true
+    jdbc-type-for-null: 'null'
+
+custom:
+  id_yyb: last_update_time_yyb
+  id_client: last_update_time_client
+  index_cust: ks_auth_cust_info

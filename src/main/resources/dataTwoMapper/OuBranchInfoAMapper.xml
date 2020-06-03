@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kingstar.ksfdatatransfer.mapper.two.OuBranchInfoAMapper" >
+
+    <select id="all" resultType="com.kingstar.ksfdatatransfer.entity.OuBranchInfoA" parameterType="com.kingstar.ksfdatatransfer.entity.OuBranchInfoA">
+        select  a.BRANCH_CODE branchCode,
+                a.BRANCH_NAME branchName,
+				a.CREATE_DATE createDate,
+				a.CREATE_TIME createTime
+        from BS_USER.OU_BRANCH_INFO_A a
+        where SYS_NO='01'
+        <if test="createDate != null  and  createTime != null ">
+            and  CONCAT(a.CREATE_DATE, a.CREATE_TIME) > CONCAT(#{createDate},#{createTime})
+        </if>
+        ORDER BY a.CREATE_DATE,a.CREATE_TIME
+    </select>
+
+    <select id="allAfterTime" resultType="com.kingstar.ksfdatatransfer.entity.OuBranchInfoA" parameterType="com.kingstar.ksfdatatransfer.entity.OuBranchInfoA">
+        select  a.BRANCH_CODE branchCode,
+                a.BRANCH_NAME branchName,
+				a.CREATE_DATE createDate,
+				a.CREATE_TIME createTime
+        from BS_USER.OU_BRANCH_INFO_A a
+        where SYS_NO='01' and  CONCAT(a.CREATE_DATE, a.CREATE_TIME) > CONCAT(#{createDate},#{createTime})
+        ORDER BY a.CREATE_DATE DESC,a.CREATE_TIME DESC
+    </select>
+
+</mapper>

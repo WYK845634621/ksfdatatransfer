@@ -1,0 +1,44 @@
+spring:
+  # 数据源配置
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    db1:
+      driverClassName: com.mysql.jdbc.Driver
+      dbUrl: jdbc:mysql://10.243.141.150:3306/mn_alarm?useUnicode=true&characterEncoding=UTF-8&useSSL=false&userAffectRows=true&allowMultiQueries=true&serverTimezone=UTC
+      username: root
+      password: Kingstar2019!
+      initialSize: 20
+      maxActive: 100
+      minIdle: 20
+      maxWait: 60000
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 30
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 30000
+      maxEvictableIdleTimeMillis: 60000
+      validationQuery: SELECT 1 FROM DUAL
+      testOnBorrow: false
+      testOnReturn: false
+      testWhileIdle: true
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      filters: stat,wall
+    db2:
+      driverClassName: oracle.jdbc.OracleDriver
+      dbUrl: jdbc:oracle:thin:@10.253.46.38:1521:TEST
+      username: system
+      password: test
+      initialSize: 20
+      maxActive: 100
+      minIdle: 20
+      maxWait: 60000
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 30
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 30000
+      maxEvictableIdleTimeMillis: 60000
+      validationQuery: SELECT 1 FROM DUAL
+      testOnBorrow: false
+      testOnReturn: false
+      testWhileIdle: true
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      filters: stat,wall
